@@ -1,8 +1,11 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+// import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
+import { $alert, $error } from './message'
 import { getToken } from '@/utils/auth'
+import Config from '@/settings'
 
+const tokenKey = Config.tokenKey
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -19,7 +22,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers[tokenKey] = getToken()
     }
     return config
   },
@@ -30,18 +33,28 @@ service.interceptors.request.use(
   }
 )
 
-// response interceptor
-service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
+const checkAuth = response => {
+  // 请根据实际需求修改
+  if (response.headers['authentication-status'] === 'invalid' || response.status === 401) {
+    const message = this.$t('login.expires')
+    $alert(message, () => {
+      store.dispatch('user/logout').then(() => {
+        location.reload()
+      })
+    })
+  }
+}
 
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
+const checkPermission = response => {
+  // 请根据实际需求修改
+  if (response.status === 403) {
+    location.href = '/403'
+  }
+}
+
+// response interceptor
+/**
+service.interceptors.response.use(
   response => {
     const res = response.data
 
@@ -81,5 +94,22 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
+*/
+// 请根据实际需求修改
+service.interceptors.response.use(response => {
+  checkAuth(response)
+  return response
+}, error => {
+  let msg
+  if (error.response) {
+    checkAuth(error.response)
+    checkPermission(error.response)
+    msg = error.response.data.message || error.response.data
+  } else {
+    console.log('error: ' + error) // for debug
+    msg = error.message
+  }
+  $error(msg)
+  return Promise.reject(error)
+})
 export default service

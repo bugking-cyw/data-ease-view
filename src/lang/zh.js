@@ -74,12 +74,18 @@ export default {
   },
   login: {
     title: '系统登录',
+    welcome: '欢迎使用DATAEASE',
     logIn: '登录',
     username: '账号',
     password: '密码',
     any: '随便填',
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
+  },
+  commons: {
+    button: {
+      login: '登录'
+    }
   },
   documentation: {
     documentation: '文档',

@@ -1,5 +1,5 @@
 module.exports = {
-
+  tokenKey: 'Config',
   title: 'Vue Admin Template',
 
   /**

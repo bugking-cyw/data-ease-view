@@ -74,12 +74,18 @@ export default {
   },
   login: {
     title: 'Login Form',
+    welcome: 'welcome To DataEase',
     logIn: 'Login',
     username: 'Username',
     password: 'Password',
     any: 'any',
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
+  },
+  commons: {
+    button: {
+      login: 'Login'
+    }
   },
   documentation: {
     documentation: 'Documentation',
