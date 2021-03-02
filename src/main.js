@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
+import '@/styles/index.scss' // global css
 import ElementUI from 'element-ui'
 import Fit2CloudUI from 'fit2cloud-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/element-variables.scss'
 import i18n from './lang' // internationalization
-import '@/styles/index.scss' // global css
 
 import App from './App'
 import store from './store'
@@ -17,6 +16,8 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import api from '@/api/index.js'
+import filter from '@/filter/filter'
+import message from '@/metersphere/common/js/message'
 Vue.prototype.$api = api
 
 /**
@@ -42,7 +43,8 @@ Vue.use(ElementUI, {
 Vue.use(Fit2CloudUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
-
+Vue.use(filter)
+Vue.use(message)
 Vue.config.productionTip = false
 
 new Vue({

@@ -5,6 +5,9 @@
 @import './sidebar.scss';
 @import './topbar.scss';
 
+@import '../metersphere/common/css/index.css';
+
+
 body {
   height: $contentHeight;
   -moz-osx-font-smoothing: grayscale;

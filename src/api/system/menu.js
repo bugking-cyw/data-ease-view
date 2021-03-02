@@ -2,32 +2,15 @@ import request from '@/utils/request'
 
 export function getMenusTree(pid) {
   return request({
-    url: 'api/menus/lazy?pid=' + pid,
-    method: 'get'
-  })
-}
-
-export function getMenus(params) {
-  return request({
-    url: 'api/menus',
-    method: 'get',
-    params
-  })
-}
-
-export function getMenuSuperior(ids) {
-  const data = ids.length || ids.length === 0 ? ids : Array.of(ids)
-  return request({
-    url: 'api/menus/superior',
-    method: 'post',
-    data
+    url: 'api/menu/childNodes/' + pid,
+    method: 'post'
   })
 }
 
 export function getChild(id) {
   return request({
-    url: 'api/menus/child?id=' + id,
-    method: 'get'
+    url: '/api/menu/childMenus/' + id,
+    method: 'post'
   })
 }
 
@@ -38,28 +21,28 @@ export function buildMenus() {
   })
 }
 
-export function add(data) {
+export function addMenu(data) {
   return request({
-    url: 'api/menus',
+    url: '/api/menu/create',
     method: 'post',
     data
   })
 }
 
-export function del(ids) {
+export function delMenu(ids) {
   return request({
-    url: 'api/menus',
-    method: 'delete',
+    url: '/api/menu/delete',
+    method: 'post',
     data: ids
   })
 }
 
-export function edit(data) {
+export function editMenu(data) {
   return request({
-    url: 'api/menus',
-    method: 'put',
+    url: '/api/menu/update',
+    method: 'post',
     data
   })
 }
 
-export default { add, edit, del, getMenusTree, getMenuSuperior, getMenus, getChild }
+export default { addMenu, editMenu, delMenu, getMenusTree, getChild }
