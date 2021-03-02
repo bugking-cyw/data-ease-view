@@ -6,7 +6,11 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    user: {},
+    roles: [],
+    avatar: '',
+    // 第一次加载菜单时用到
+    loadMenus: false
   }
 }
 
@@ -24,6 +28,15 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_USER: (state, user) => {
+    state.user = user
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
+  SET_LOAD_MENUS: (state, loadMenus) => {
+    state.loadMenus = loadMenus
   }
 }
 
@@ -52,6 +65,11 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
+        const currentUser = data
+        commit('SET_USER', currentUser)
+
+        const roles = data.roles
+        commit('SET_ROLES', roles)
 
         const { nickName } = data
         commit('SET_NAME', nickName)
@@ -74,6 +92,11 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+  updateLoadMenus({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('SET_LOAD_MENUS', false)
     })
   },
 

@@ -28,6 +28,11 @@
         <el-switch v-model="uniqueOpened" class="drawer-switch" />
       </div> -->
 
+      <div class="drawer-item">
+        <span>展开菜单</span>
+        <el-switch v-model="toggleSideBar" class="drawer-switch" />
+      </div>
+
     </div>
   </div>
 </template>
@@ -38,7 +43,9 @@ import ThemePicker from '@/components/ThemePicker'
 export default {
   components: { ThemePicker },
   data() {
-    return {}
+    return {
+      showMenu: true
+    }
   },
   computed: {
     // fixedHeader: {
@@ -72,6 +79,15 @@ export default {
           key: 'sidebarLogo',
           value: val
         })
+      }
+    },
+    toggleSideBar: {
+      get() {
+        return this.showMenu
+      },
+      set(val) {
+        this.showMenu = !this.showMenu
+        this.$store.dispatch('app/toggleSideBar')
       }
     }
     // uniqueOpened: {

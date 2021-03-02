@@ -7,7 +7,7 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <div v-for="item in routes" :key="item.path" class="nav-item">
+      <div v-for="item in permission_routes" :key="item.path" class="nav-item">
         <app-link :to="resolvePath(item)">
           <el-menu-item
             v-if="!item.hidden"
@@ -59,7 +59,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import AppLink from './Sidebar/Link'
-import { constantRoutes } from '@/router'
 import variables from '@/styles/variables.scss'
 import { isExternal } from '@/utils/validate'
 import Doc from '@/components/Doc'
@@ -77,7 +76,7 @@ export default {
   },
   data() {
     return {
-      routes: constantRoutes
+
     }
   },
   computed: {
@@ -102,7 +101,10 @@ export default {
     sidebar() {
       return this.$store.state.app.sidebar
     },
-    ...mapGetters(['avatar'])
+    ...mapGetters([
+      'avatar',
+      'permission_routes'
+    ])
   },
   mounted() {
     this.initCurrentRoutes()
@@ -111,12 +113,12 @@ export default {
     // 通过当前路径找到二级菜单对应项，存到store，用来渲染左侧菜单
     initCurrentRoutes() {
       const { path } = this.$route
-      let route = this.routes.find(
+      let route = this.permission_routes.find(
         item => item.path === '/' + path.split('/')[1]
       )
       // 如果找不到这个路由，说明是首页
       if (!route) {
-        route = this.routes.find(item => item.path === '/')
+        route = this.permission_routes.find(item => item.path === '/')
       }
       this.$store.commit('permission/SET_CURRENT_ROUTES', route)
       this.setSidebarHide(route)
@@ -172,7 +174,7 @@ export default {
     },
     handleSelect(key, keyPath) {
       // 把选中路由的子路由保存store
-      const route = this.routes.find(item => item.path === key)
+      const route = this.permission_routes.find(item => item.path === key)
       this.$store.commit('permission/SET_CURRENT_ROUTES', route)
       this.setSidebarHide(route)
     },
