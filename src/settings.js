@@ -1,6 +1,6 @@
 module.exports = {
-  tokenKey: 'Config',
-  title: 'Vue Admin Template',
+  TokenKey: 'Authorization',
+  title: 'DATA_EASE',
 
   /**
    * @type {boolean} true | false
