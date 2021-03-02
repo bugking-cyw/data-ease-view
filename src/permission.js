@@ -66,7 +66,7 @@ router.beforeEach(async(to, from, next) => {
 export const loadMenus = (next, to) => {
   buildMenus().then(res => {
     const asyncRouter = filterAsyncRouter(res.data.data)
-    // asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
+    asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
     store.dispatch('permission/GenerateRoutes', asyncRouter).then(() => { // 存储路由
       router.addRoutes(asyncRouter)
       next({ ...to, replace: true })
