@@ -1,98 +1,104 @@
 <template>
-<el-col>
-  <!-- group -->
-  <el-col v-if="!sceneMode">
-    <el-row class="title-css">
-      <span class="title-text">
-        {{ $t('dataset.datalist') }}
-      </span>
-    </el-row>
-    <el-divider/>
-
-    <el-row>
-      <el-form>
-        <el-form-item class="form-item">
-          <el-input
-            size="mini"
-            :placeholder="$t('dataset.search')"
-            prefix-icon="el-icon-search"
-            v-model="search"
-            clearable>
-          </el-input>
-        </el-form-item>
-      </el-form>
-    </el-row>
-
-    <el-col class="custom-tree-container">
-      <div class="block">
-        <el-tree
-          :default-expanded-keys="expandedArray"
-          :data="data"
-          node-key="id"
-          :expand-on-click-node="true"
-          @node-click="nodeClick">
-        <span class="custom-tree-node" slot-scope="{ node, data }">
-          <span>
-            <span v-if="data.type === 'scene'">
-              <el-button
-                icon="el-icon-folder"
-                type="text"
-                size="mini">
-              </el-button>
-            </span>
-            <span style="margin-left: 6px">{{ data.name }}</span>
-          </span>
+  <el-col>
+    <!-- group -->
+    <el-col v-if="!sceneMode">
+      <el-row class="title-css">
+        <span class="title-text">
+          {{ $t('dataset.datalist') }}
         </span>
-        </el-tree>
-      </div>
-    </el-col>
-  </el-col>
+      </el-row>
+      <el-divider />
 
-  <!--scene-->
-  <el-col v-if="sceneMode">
-    <el-row class="title-css">
-      <span class="title-text">
-        {{currGroup.name}}
-      </span>
-      <el-button icon="el-icon-back" size="mini" @click="back" style="float: right">
-        {{$t('dataset.back')}}
-      </el-button>
-    </el-row>
-    <el-divider/>
-    <el-row>
-      <el-form>
-        <el-form-item class="form-item">
-          <el-input
-            size="mini"
-            :placeholder="$t('dataset.search')"
-            prefix-icon="el-icon-search"
-            v-model="search"
-            clearable>
-          </el-input>
-        </el-form-item>
-      </el-form>
-    </el-row>
-    <el-tree
-      :data="tableData"
-      node-key="id"
-      :expand-on-click-node="true"
-      @node-click="sceneClick">
-        <span class="custom-tree-node" slot-scope="{ node, data }">
+      <el-row>
+        <el-form>
+          <el-form-item class="form-item">
+            <el-input
+              v-model="search"
+              size="mini"
+              :placeholder="$t('dataset.search')"
+              prefix-icon="el-icon-search"
+              clearable
+            />
+          </el-form-item>
+        </el-form>
+      </el-row>
+
+      <el-col class="custom-tree-container">
+        <div class="block">
+          <el-tree
+            :default-expanded-keys="expandedArray"
+            :data="data"
+            node-key="id"
+            :expand-on-click-node="true"
+            @node-click="nodeClick"
+          >
+            <span slot-scope="{ node, data }" class="custom-tree-node">
+              <span>
+                <span v-if="data.type === 'scene'">
+                  <el-button
+                    icon="el-icon-folder"
+                    type="text"
+                    size="mini"
+                  />
+                </span>
+                <span style="margin-left: 6px">{{ data.name }}</span>
+              </span>
+            </span>
+          </el-tree>
+        </div>
+      </el-col>
+    </el-col>
+
+    <!--scene-->
+    <el-col v-if="sceneMode">
+      <el-row class="title-css">
+        <span class="title-text">
+          {{ currGroup.name }}
+        </span>
+        <el-button icon="el-icon-back" size="mini" style="float: right" @click="back">
+          {{ $t('dataset.back') }}
+        </el-button>
+      </el-row>
+      <el-divider />
+      <el-row>
+        <el-form>
+          <el-form-item class="form-item">
+            <el-input
+              v-model="search"
+              size="mini"
+              :placeholder="$t('dataset.search')"
+              prefix-icon="el-icon-search"
+              clearable
+            />
+          </el-form-item>
+        </el-form>
+      </el-row>
+      <el-tree
+        :data="tableData"
+        node-key="id"
+        :expand-on-click-node="true"
+        @node-click="sceneClick"
+      >
+        <span slot-scope="{ node, data }" class="custom-tree-node">
           <span>
             <span>
-              ({{data.type}})
+              ({{ data.type }})
+            </span>
+            <span>
+              <span v-if="data.mode === 0" style="margin-left: 6px"><i class="el-icon-s-operation" /></span>
+              <span v-if="data.mode === 1" style="margin-left: 6px"><i class="el-icon-time" /></span>
             </span>
             <span style="margin-left: 6px">{{ data.name }}</span>
           </span>
         </span>
-    </el-tree>
+      </el-tree>
+    </el-col>
   </el-col>
-</el-col>
 </template>
 
 <script>
 export default {
-  name: "DatasetGroupSelector",
+  name: 'DatasetGroupSelector',
   data() {
     return {
       sceneMode: false,
@@ -112,27 +118,27 @@ export default {
       tableForm: {
         name: '',
         sort: 'type asc,create_time desc,name asc'
-      },
+      }
     }
   },
   computed: {},
-  mounted() {
-    this.tree(this.groupForm);
-    this.tableTree();
-  },
-  activated() {
-    this.tree(this.groupForm);
-    this.tableTree();
-  },
   watch: {
     // search(val){
     //   this.groupForm.name = val;
     //   this.tree(this.groupForm);
     // }
   },
+  mounted() {
+    this.tree(this.groupForm)
+    this.tableTree()
+  },
+  activated() {
+    this.tree(this.groupForm)
+    this.tableTree()
+  },
   methods: {
     close() {
-      this.editGroup = false;
+      this.editGroup = false
       this.groupForm = {
         name: '',
         pid: null,
@@ -144,27 +150,27 @@ export default {
     },
 
     closeTable() {
-      this.editTable = false;
+      this.editTable = false
       this.tableForm = {
-        name: '',
+        name: ''
       }
     },
 
     tree(group) {
-      this.$post("/dataset/group/tree", group, response => {
-        this.data = response.data;
+      this.$post('/dataset/group/tree', group, response => {
+        this.data = response.data
       })
     },
 
     tableTree() {
-      this.tableData = [];
+      this.tableData = []
       if (this.currGroup) {
         this.$post('/dataset/table/list', {
           sort: 'type asc,create_time desc,name asc',
           sceneId: this.currGroup.id
         }, response => {
-          this.tableData = response.data;
-        });
+          this.tableData = response.data
+        })
       }
     },
 
@@ -172,29 +178,29 @@ export default {
       // console.log(data);
       // console.log(node);
       if (data.type === 'scene') {
-        this.sceneMode = true;
-        this.currGroup = data;
-        this.tableTree();
+        this.sceneMode = true
+        this.currGroup = data
+        this.tableTree()
       }
       if (node.expanded) {
-        this.expandedArray.push(data.id);
+        this.expandedArray.push(data.id)
       } else {
-        let index = this.expandedArray.indexOf(data.id);
+        const index = this.expandedArray.indexOf(data.id)
         if (index > -1) {
-          this.expandedArray.splice(index, 1);
+          this.expandedArray.splice(index, 1)
         }
       }
       // console.log(this.expandedArray);
     },
 
     back() {
-      this.sceneMode = false;
+      this.sceneMode = false
     },
 
     sceneClick(data, node) {
       // console.log(data);
-      this.$emit("getTable", data);
-    },
+      this.$emit('getTable', data)
+    }
   }
 }
 </script>

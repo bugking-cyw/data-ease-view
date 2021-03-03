@@ -519,6 +519,8 @@ export default {
         this.$post('/chart/group/getScene/' + sceneId, null, response => {
           this.currGroup = response.data
         })
+      } else {
+        this.$router.push('/chart')
       }
     }
   }
