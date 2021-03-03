@@ -1,5 +1,6 @@
 import { constantRoutes } from '@/router'
 import Layout from '@/layout/index'
+
 const state = {
   routes: [],
   addRoutes: [],

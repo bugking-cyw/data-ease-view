@@ -12,6 +12,8 @@ const getters = {
   loadMenus: state => state.user.loadMenus,
   permission_routes: state => state.permission.routes,
   addRouters: state => state.permission.addRouters,
-  errorLogs: state => state.errorLog.logs
+  errorLogs: state => state.errorLog.logs,
+  sceneData: state => state.dataset.sceneData,
+  table: state => state.dataset.table
 }
 export default getters

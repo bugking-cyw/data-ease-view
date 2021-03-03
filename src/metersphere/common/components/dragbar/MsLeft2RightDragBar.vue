@@ -1,11 +1,11 @@
 <template>
-  <div class="drag-bar" v-left-to-right-drag/>
+  <div v-left-to-right-drag class="drag-bar" />
 </template>
 
 <script>
-    export default {
-        name: "MsLeft2RightDragBar"
-    }
+export default {
+  name: 'MsLeft2RightDragBar'
+}
 </script>
 
 <style scoped>

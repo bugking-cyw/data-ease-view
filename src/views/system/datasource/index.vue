@@ -219,14 +219,6 @@ export default {
           { required: true, message: this.$t('organization.input_name'), trigger: 'blur' },
           { max: 50, message: this.$t('commons.input_limit', [0, 50]), trigger: 'blur' }
         ]
-      },
-      orgMemberRule: {
-        userIds: [
-          { required: true, message: this.$t('member.please_choose_member'), trigger: ['blur'] }
-        ],
-        roleIds: [
-          { required: true, message: this.$t('role.please_choose_role'), trigger: ['blur'] }
-        ]
       }
     }
   },
