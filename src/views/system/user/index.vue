@@ -433,7 +433,7 @@ export default {
     },
     allRoles() {
       allRoles().then(res => {
-        this.roles = res.data
+        this.roles = res.data.data
       })
     }
 
